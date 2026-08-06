@@ -1,0 +1,24 @@
+info:
+  name: Upload Resume
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:5000/api/resume/upload
+  body:
+    type: multipart-form
+    data:
+      - name: resume
+        type: file
+        value:
+          - c:\Users\intel\Desktop\AI-Resume-Analyzer\bruno\AI Resume Analyzer\hersita resume.pdf
+        contentType: File
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+​

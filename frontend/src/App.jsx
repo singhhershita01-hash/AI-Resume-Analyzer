@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { checkHealth } from "./api/resumeApi";
+import ResumeDropzone from "./components/upload/ResumeDropzone";
 
 function App() {
   useEffect(() => {
@@ -15,6 +16,7 @@ function App() {
   return (
     <div>
       <h1>AI Resume Analyzer</h1>
+      <ResumeDropzone />
     </div>
   );
 }

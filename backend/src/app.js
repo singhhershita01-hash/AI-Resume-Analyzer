@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import resumeRoutes from "./routes/resumeRoutes.js";
-app.use("/api/resume", resumeRoutes);
 
 const app = express();
 
@@ -20,5 +19,6 @@ app.get("/health",(req,res)=>{
     });
 });
 
+app.use("/api/resume", resumeRoutes);
 
 export default app;

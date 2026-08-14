@@ -22,6 +22,11 @@ const resumeSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    extractionMethod: {
+      type: String,
+      enum: ["pdf-parse", "ocr"],
+      required: true,
+    },
   },
   { timestamps: true } // adds createdAt and updatedAt automatically
 );

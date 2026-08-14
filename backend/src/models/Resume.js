@@ -27,6 +27,10 @@ const resumeSchema = new mongoose.Schema(
       enum: ["pdf-parse", "ocr"],
       required: true,
     },
+    analysis: {
+      type: mongoose.Schema.Types.Mixed,
+      default: null,
+    },
   },
   { timestamps: true } // adds createdAt and updatedAt automatically
 );

@@ -15,3 +15,7 @@ export const uploadResume = (file) => {
     headers: { "Content-Type": "multipart/form-data" },
   }).then((res) => res.data);
 };
+
+export const analyzeResume = (resumeId) => {
+  return api.post(`/api/resume/analyze/${resumeId}`).then((res) => res.data);
+};

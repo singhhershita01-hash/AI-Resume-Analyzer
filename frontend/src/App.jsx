@@ -15,7 +15,8 @@ function App() {
 
   return (
     <div>
-      <h1>AI Resume Analyzer</h1>
+      <h1 className="text-4xl font-bold text-emerald-500">AI Resume Analyzer</h1>
+      
       <ResumeDropzone />
     </div>
   );

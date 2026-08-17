@@ -11,12 +11,20 @@ You are an ATS (Applicant Tracking System) resume analyzer. Analyze the followin
 The JSON must follow this exact structure:
 {
   "atsScore": <number 0-100>,
+  "scoreBreakdown": {
+    "formatting": <number 0-25>,
+    "keywords": <number 0-25>,
+    "sectionCompleteness": <number 0-25>,
+    "readability": <number 0-25>
+  },
   "summary": "<2-3 sentence overall assessment>",
   "strengths": ["<strength 1>", "<strength 2>", "<strength 3>"],
   "weaknesses": ["<weakness 1>", "<weakness 2>", "<weakness 3>"],
   "suggestedRoles": ["<role 1>", "<role 2>"],
   "missingKeywords": ["<keyword 1>", "<keyword 2>"]
 }
+
+Note: the four scoreBreakdown values must sum to exactly atsScore.
 
 Resume text:
 """

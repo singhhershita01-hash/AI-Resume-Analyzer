@@ -1,3 +1,5 @@
+import ExpandableList from "../common/ExpandableList";
+
 const ScoreBar = ({ label, value, max = 25 }) => (
   <div className="mb-3">
     <div className="flex justify-between text-sm mb-1">
@@ -14,18 +16,25 @@ const ScoreBar = ({ label, value, max = 25 }) => (
 );
 
 export default function ATSScoreCard({ analysis }) {
-  const { atsScore, scoreBreakdown, summary } = analysis;
+  const { atsScore, scoreBreakdown, summary, strengths, weaknesses, suggestedRoles, missingKeywords } = analysis;
 
   return (
     <div className="bg-gray-900 rounded-lg p-6">
-      <h2 className="text-2xl font-bold mb-2">ATS Score: {atsScore}/100</h2>
+      <h2 className="text-2xl font-bold mb-2 text-white">ATS Score: {atsScore}/100</h2>
       <p className="text-gray-400 mb-6">{summary}</p>
 
-      <h3 className="font-semibold mb-3">Score Breakdown</h3>
+      <h3 className="font-semibold mb-3 text-gray-100">Score Breakdown</h3>
       <ScoreBar label="Formatting" value={scoreBreakdown.formatting} />
       <ScoreBar label="Keywords" value={scoreBreakdown.keywords} />
       <ScoreBar label="Section Completeness" value={scoreBreakdown.sectionCompleteness} />
       <ScoreBar label="Readability" value={scoreBreakdown.readability} />
+
+      <div className="mt-6">
+        <ExpandableList title="Strengths" items={strengths} />
+        <ExpandableList title="Weaknesses" items={weaknesses} />
+        <ExpandableList title="Suggested Roles" items={suggestedRoles} />
+        <ExpandableList title="Missing Keywords" items={missingKeywords} />
+      </div>
     </div>
   );
 }

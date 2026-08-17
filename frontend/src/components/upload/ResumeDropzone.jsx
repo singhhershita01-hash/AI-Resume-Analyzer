@@ -1,6 +1,9 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { uploadResume, analyzeResume } from "../../api/resumeApi";
+import ATSScoreCard from "../dashboard/ATSScoreCard";
+import Loader from "../common/Loader";
+import ErrorBanner from "../common/ErrorBanner";
 
 export default function ResumeDropzone() {
   const [result, setResult] = useState(null);
@@ -50,72 +53,48 @@ export default function ResumeDropzone() {
   });
 
   return (
-    <div style={{ maxWidth: "700px", margin: "0 auto" }}>
+    <div className="max-w-2xl mx-auto px-4">
       <div
         {...getRootProps()}
-        style={{
-          border: "2px dashed #999",
-          borderRadius: "8px",
-          padding: "40px",
-          textAlign: "center",
-          cursor: "pointer",
-          backgroundColor: isDragActive ? "#f0f0f0" : "#fff",
-        }}
+        className={`border-2 border-dashed rounded-lg p-10 text-center cursor-pointer transition-colors ${isDragActive ? "bg-gray-800 border-emerald-500" : "border-gray-600"
+          }`}
       >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <p>Drop the PDF here...</p>
+          <p className="text-gray-300">Drop the PDF here...</p>
         ) : (
-          <p>Drag & drop your resume PDF here, or click to select</p>
+          <p className="text-gray-400">
+            Drag & drop your resume PDF here, or click to select
+          </p>
         )}
       </div>
 
-      {uploading && <p>Uploading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {result && !analysis && (
-        <div style={{ marginTop: "20px" }}>
-          <p style={{ color: "green" }}>
+      {uploading && <p className="text-gray-400 mt-4">Uploading...</p>}
+      {error && (
+        <ErrorBanner
+          message={error}
+          onRetry={result ? handleAnalyze : undefined}
+        />
+      )}
+      {result && !analysis && !analyzing && (
+        <div className="mt-6">
+          <p className="text-emerald-400">
             Uploaded: {result.originalname} ({result.size} bytes)
           </p>
-          <button onClick={handleAnalyze} disabled={analyzing}>
-            {analyzing ? "Analyzing..." : "Analyze Resume"}
+          <button
+            onClick={handleAnalyze}
+            className="mt-3 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded"
+          >
+            Analyze Resume
           </button>
         </div>
       )}
 
-      {analysis && (
-        <div style={{ marginTop: "20px", textAlign: "left" }}>
-          <h2>ATS Score: {analysis.atsScore}/100</h2>
-          <p>{analysis.summary}</p>
+      {analyzing && <Loader />}
 
-          <h3>Strengths</h3>
-          <ul>
-            {analysis.strengths.map((s, i) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ul>
-
-          <h3>Weaknesses</h3>
-          <ul>
-            {analysis.weaknesses.map((w, i) => (
-              <li key={i}>{w}</li>
-            ))}
-          </ul>
-
-          <h3>Suggested Roles</h3>
-          <ul>
-            {analysis.suggestedRoles.map((r, i) => (
-              <li key={i}>{r}</li>
-            ))}
-          </ul>
-
-          <h3>Missing Keywords</h3>
-          <ul>
-            {analysis.missingKeywords.map((k, i) => (
-              <li key={i}>{k}</li>
-            ))}
-          </ul>
+      {analysis && !analyzing && (
+        <div className="mt-6 text-left">
+          <ATSScoreCard analysis={analysis} />
         </div>
       )}
     </div>
